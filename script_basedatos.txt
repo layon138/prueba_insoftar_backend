@@ -1,0 +1,85 @@
+CREATE TABLE usuarios (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nombres VARCHAR(25),
+    apellidos VARCHAR(25),
+    email VARCHAR(30),
+    cedula VARCHAR(15),
+    telefono VARCHAR(10)
+);
+
+
+
+//codigo+
+
+'use strict';
+
+const fs = require('fs');
+
+process.stdin.resume();
+process.stdin.setEncoding('utf-8');
+
+let inputString = '';
+let currentLine = 0;
+
+process.stdin.on('data', function(inputStdin) {
+    inputString += inputStdin;
+});
+
+process.stdin.on('end', function() {
+    inputString = inputString.split('\n');
+
+    main();
+});
+
+function readLine() {
+    return inputString[currentLine++];
+}
+
+
+
+/*
+ * Complete the 'partitionArray' function below.
+ *
+ * The function is expected to return a STRING.
+ * The function accepts following parameters:
+ *  1. INTEGER k
+ *  2. INTEGER_ARRAY numbers
+ */
+
+function partitionArray(k, numbers) {
+    // Write your code here
+   console.log(k)
+   console.log(numbers)
+   var cantidad_sub=0
+   for(var i=1;i<numbers.length;i=i+2){
+       if(numbers[i]!=numbers[i-1]){
+           cantidad_sub++
+       }
+   }
+    if(cantidad_sub===k){
+        return "Yes"
+    }else{
+        return "No"
+    }
+}
+
+function main() {
+    const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
+
+    const k = parseInt(readLine().trim(), 10);
+
+    const numbersCount = parseInt(readLine().trim(), 10);
+
+    let numbers = [];
+
+    for (let i = 0; i < numbersCount; i++) {
+        const numbersItem = parseInt(readLine().trim(), 10);
+        numbers.push(numbersItem);
+    }
+
+    const result = partitionArray(k, numbers);
+
+    ws.write(result + '\n');
+
+    ws.end();
+}
